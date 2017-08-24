@@ -5,44 +5,34 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import anwar.onlineshop.Adapter.RecyclerItemClickListener;
-import anwar.onlineshop.Adapter.RowItem;
-import anwar.onlineshop.Adapter.productRecyclerAdapter;
-import anwar.onlineshop.Adapter.recomRecyclerAdapter;
 import anwar.onlineshop.HomeActivity;
 import anwar.onlineshop.R;
-
-import static anwar.onlineshop.R.id.Relative_layoutfor_fragments;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link productFragment.OnFragmentInteractionListener} interface
+ * {@link ViewFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link productFragment#newInstance} factory method to
+ * Use the {@link ViewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class productFragment extends Fragment {
+public class ViewFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private RecyclerView productRecyclerView;
-    private RecyclerView.Adapter listadapter;
-    private GridLayoutManager layoutManager;
-    private List<RowItem> productList=new ArrayList<>();
-    private List<RowItem> rcList=new ArrayList<>();
+    private TextView brand_name,product_id,size,color,price;
+    private Button orderBtn,backBtn;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private ImageView image;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -50,7 +40,7 @@ public class productFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public productFragment() {
+    public ViewFragment() {
         // Required empty public constructor
     }
 
@@ -60,11 +50,11 @@ public class productFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment productFragment.
+     * @return A new instance of fragment ViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static productFragment newInstance(String param1, String param2) {
-        productFragment fragment = new productFragment();
+    public static ViewFragment newInstance(String param1, String param2) {
+        ViewFragment fragment = new ViewFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -85,39 +75,20 @@ public class productFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_product, container, false);
-        ((HomeActivity)getActivity()).imageTransition(view);
-        productRecyclerView=(RecyclerView)view.findViewById(R.id.product_recycler_view);
-        layoutManager=new GridLayoutManager(getActivity(),2);
-        RowItem ro0 = new RowItem(R.drawable.w6,"T-SHART","descriptio"," Tk 100");
-        productList.add(ro0);
-        RowItem ro11 = new RowItem(R.drawable.women4,"WOMEN"," descriptio"," Tk 100");
-        productList.add(ro11);
-        RowItem ro2 = new RowItem(R.drawable.watch,"MEN"," descriptio"," Tk 100");
-        productList.add(ro2);
-        RowItem ro00 = new RowItem(R.drawable.pant2,"T-SHART","descriptio"," Tk 100");
-        productList.add(ro00);
-        RowItem ro111 = new RowItem(R.drawable.women4,"WOMEN"," descriptio"," Tk 100");
-        productList.add(ro111);
-        RowItem ro22 = new RowItem(R.drawable.pant1,"MEN"," descriptio"," Tk 100");
-        productList.add(ro22);
-        listadapter=new productRecyclerAdapter(productList);
-        productRecyclerView.setLayoutManager(layoutManager);
-        productRecyclerView.setAdapter(listadapter);
-        productRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), productRecyclerView, new RecyclerItemClickListener
-                .OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                ViewFragment viewFragment=new ViewFragment();
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
-                        viewFragment, viewFragment.getTag()).addToBackStack(null).commit();
-            }
-
-            @Override
-            public void onItemLongClick(View v, int position) {
-            }
-        }));
+        View view= inflater.inflate(R.layout.fragment_view, container, false);
+        collapsingToolbarLayout=(CollapsingToolbarLayout)getActivity().findViewById(R.id.collapsingtool);
+        collapsingToolbarLayout.setTitle("View Fragment");
+        image=(ImageView)getActivity().findViewById(R.id.toolbart_product_img);
+        image.setImageResource(R.drawable.women);
+        backBtn=(Button)getActivity().findViewById(R.id.view_backBtn);
+        backBtn.setVisibility(View.VISIBLE);
+        brand_name=(TextView)view.findViewById(R.id.brand_name);
+        product_id=(TextView)view.findViewById(R.id.product_id);
+        size=(TextView)view.findViewById(R.id.size);
+        color=(TextView)view.findViewById(R.id.color);
+        orderBtn=(Button) view.findViewById(R.id.order);
+        orderBtn.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
         return view;
     }
 
@@ -131,12 +102,23 @@ public class productFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+      /*  if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
     /**
@@ -152,5 +134,18 @@ public class productFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        backBtn.setVisibility(View.GONE);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 }

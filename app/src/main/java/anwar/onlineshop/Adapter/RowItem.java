@@ -9,11 +9,15 @@ import android.graphics.Bitmap;
 public class RowItem {
    private int drawable;
     private String id;
+    private String Product_id;
     private String catagory;
     private String name;
     private String price;
     private String total;
     private String details;
+    private String size;
+    private String color;
+    private String url;
     public RowItem(int drawable, String catagory) {
         this.drawable = drawable;
         this.catagory = catagory;
@@ -39,6 +43,15 @@ public class RowItem {
         this.name = name;
         this.details = details;
         this.price = price;
+    }
+
+    public RowItem( String product_id, String name, String price, String size, String color, String url) {
+        Product_id = product_id;
+        this.name = name;
+        this.price = price;
+        this.size = size;
+        this.color = color;
+        this.url = url;
     }
 
     public int getDrawable() {
@@ -94,5 +107,21 @@ public class RowItem {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getProduct_id() {
+        return Product_id;
+    }
+
+    public void setProduct_id(String product_id) {
+        Product_id = product_id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

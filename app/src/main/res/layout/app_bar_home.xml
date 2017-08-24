@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/appbar_layout"
     tools:context="anwar.onlineshop.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -28,7 +29,16 @@
                 android:fitsSystemWindows="true"
                 android:scaleType="fitXY"
                 app:layout_collapseMode="pin" />
-
+            <Button
+                android:id="@+id/view_backBtn"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:background="@drawable/back_icon_arrow"
+                android:visibility="gone"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                app:layout_collapseMode="pin"
+                />
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
