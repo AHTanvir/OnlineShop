@@ -1,5 +1,6 @@
 package anwar.onlineshop;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import static anwar.onlineshop.api.EndPoints.PRODUCTS;
 import anwar.onlineshop.Fragment.CategoryFragment;
 import anwar.onlineshop.Fragment.CyclicTransitionDrawable;
 import anwar.onlineshop.Fragment.HomeFragment;
+import anwar.onlineshop.Fragment.OrderFragment;
 import anwar.onlineshop.api.EndPoints;
 import anwar.onlineshop.api.JsonRequest;
 import anwar.onlineshop.api.OkHttpStack;
@@ -61,29 +63,12 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        appbar=(AppBarLayout) findViewById(R.id.appbar);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
         HomeFragment homeFragment=new HomeFragment();
+        OrderFragment orderFragment=new OrderFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
                 homeFragment, homeFragment.getTag()).commit();
-        isVisible=true;
+       //ShowAndHide();
         init();
        //volley();
     }
@@ -155,14 +140,31 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void imageTransition(View view){
-        collapsingToolbarLayout=(CollapsingToolbarLayout)this.findViewById(R.id.collapsingtool);
-        collapsing_image=(ImageView)this.findViewById(R.id.toolbart_product_img);
+    public void imageTransition(View view,Activity activity){
+        toolbar = (Toolbar)view.findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+/*         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        collapsingToolbarLayout=(CollapsingToolbarLayout)view.findViewById(R.id.collapsingtool);
+        collapsing_image=(ImageView)view.findViewById(R.id.toolbart_product_img);
         Drawable[] layer=new Drawable[4];
-        layer[0]= ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.w6);
-        layer[1]=ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.watch);
-        layer[2]=ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.women6);
-        layer[3]=ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.women3);
+        layer[0]= ContextCompat.getDrawable(activity.getApplicationContext(),R.drawable.w6);
+        layer[1]=ContextCompat.getDrawable(activity.getApplicationContext(),R.drawable.watch);
+        layer[2]=ContextCompat.getDrawable(activity.getApplicationContext(),R.drawable.women6);
+        layer[3]=ContextCompat.getDrawable(activity.getApplicationContext(),R.drawable.women3);
         CyclicTransitionDrawable ctd=new CyclicTransitionDrawable(layer);
         collapsing_image.setImageDrawable(ctd);
         ctd.startTransition(1000, 3000);
@@ -171,5 +173,18 @@ public class HomeActivity extends AppCompatActivity
         collapsing_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
         transition.setCrossFadeEnabled(true);
         transition.startTransition(1000);*/
+
+    }
+    public void ShowAndHide(){
+        if (!isVisible){
+            getSupportActionBar().show();
+            appbar.setVisibility(View.VISIBLE);
+            isVisible=true;
+        }else {
+            fab.hide();
+            appbar.setVisibility(View.GONE);
+            getSupportActionBar().hide();
+            isVisible=false;
+        }
     }
 }

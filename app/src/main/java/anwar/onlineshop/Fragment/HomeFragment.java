@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,9 +97,7 @@ public class HomeFragment extends Fragment implements RecyclerItemClickListener.
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view= inflater.inflate(R.layout.fragment_home, container, false);
-        collapsingToolbarLayout=(CollapsingToolbarLayout)getActivity().findViewById(R.id.collapsingtool);
-        collapsing_image=(ImageView)getActivity().findViewById(R.id.toolbart_product_img);
-        ((HomeActivity)getActivity()).imageTransition(view);
+        ((HomeActivity)getActivity()).imageTransition(view,getActivity());
         recyclerView=(RecyclerView)view.findViewById(R.id.home_recyclerView);
         bestSellerRecyclerView=(RecyclerView)view.findViewById(R.id.home_bestseller_list);
         //collapsingToolbarLayout.setTitle("Colla.......");
@@ -113,6 +113,7 @@ public class HomeFragment extends Fragment implements RecyclerItemClickListener.
                 .OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+
                 CategoryFragment categoryFragment=new CategoryFragment();
                 FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,

@@ -3,6 +3,7 @@ package anwar.onlineshop.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
@@ -91,10 +92,10 @@ public class CategoryFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view= inflater.inflate(R.layout.fragment_category, container, false);
-        ((HomeActivity)getActivity()).imageTransition(view);
+        ((HomeActivity)getActivity()).imageTransition(view,getActivity());
         categoryList=(RecyclerView) view.findViewById(R.id.category_list);
         categoryRecom=(RecyclerView) view.findViewById(R.id.category_recomList);
-        for (int i = 0; i <10 ; i++) {
+        for (int i = 0; i <3 ; i++) {
             RowItem r=new RowItem("Category","100");
             cgList.add(r);
         }

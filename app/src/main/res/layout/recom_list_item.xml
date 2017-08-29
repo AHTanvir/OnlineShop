@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:background="@color/cardview_light_background">
     <ImageView
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:scaleType="fitXY"
@@ -14,29 +14,37 @@
             android:id="@+id/product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:text="Product name"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
+            android:textSize="16sp"
+            android:layout_alignTop="@+id/product_img"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
         <TextView
             android:id="@+id/product_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:paddingRight="10dp"
             android:maxLines="5"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="product_details"
-           android:textSize="12sp" />
+           android:textSize="12sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
         <TextView
             android:id="@+id/product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:text="397 Tk"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textColor="#009966"
+            android:textSize="14sp" />
 </RelativeLayout>

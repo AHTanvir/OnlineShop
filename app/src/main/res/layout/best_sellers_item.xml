@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/cardview"
-    app:cardBackgroundColor="@color/cardview_shadow_start_color"
+    app:cardBackgroundColor="@color/cardview_light_background"
     android:padding="5dp"
     app:cardElevation="4dp">
 
@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/thumb_img"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:background="@color/lightgrey"
             android:scaleType="fitXY"
             android:src="@drawable/men" />
@@ -25,11 +25,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/thumb_img"
-            android:background="@color/lightgrey"
             android:text="Name"
             android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/cardview_light_background" />
+            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
         <TextView
             android:id="@+id/Product_price"
@@ -37,11 +35,10 @@
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/Product_name"
-            android:background="@color/lightgrey"
+            android:textColor="#009966"
             android:textAlignment="center"
             android:text="Price"
-            android:textColor="@color/cardview_light_background"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+           android:textSize="16sp"/>
     </RelativeLayout>
 
 

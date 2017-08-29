@@ -1,20 +1,36 @@
 package anwar.onlineshop.Fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import anwar.onlineshop.HomeActivity;
 import anwar.onlineshop.R;
+
+import static anwar.onlineshop.R.id.Relative_layoutfor_fragments;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,10 +45,16 @@ public class ViewFragment extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private PopupWindow popupWindow;
+    private Spinner spColor,spSize;
+    private SpinnerAdapter  spinneradapter;
+    private LinearLayout menuLayout;
     private TextView brand_name,product_id,size,color,price;
     private Button orderBtn,backBtn;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ImageView image;
+    private String colorList[]=new String[]{"RED","GREEN","BLUE","WHITE","BLACK"};
+    private String sizeList[]=new String[]{"SMALL","MEDIUM","LARGE","EXTRA"};
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -76,11 +98,11 @@ public class ViewFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_view, container, false);
-        collapsingToolbarLayout=(CollapsingToolbarLayout)getActivity().findViewById(R.id.collapsingtool);
-        collapsingToolbarLayout.setTitle("View Fragment");
-        image=(ImageView)getActivity().findViewById(R.id.toolbart_product_img);
+        collapsingToolbarLayout=(CollapsingToolbarLayout)view.findViewById(R.id.collapsingtool);
+        collapsingToolbarLayout.setTitle("Fragment");
+        image=(ImageView)view.findViewById(R.id.toolbart_product_img);
         image.setImageResource(R.drawable.women);
-        backBtn=(Button)getActivity().findViewById(R.id.view_backBtn);
+        backBtn=(Button)view.findViewById(R.id.view_backBtn);
         backBtn.setVisibility(View.VISIBLE);
         brand_name=(TextView)view.findViewById(R.id.brand_name);
         product_id=(TextView)view.findViewById(R.id.product_id);
@@ -118,7 +140,10 @@ public class ViewFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
+        OrderFragment orderFragment=new OrderFragment();
+        FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
+                orderFragment, orderFragment.getTag()).addToBackStack(null).commit();
     }
 
     /**
@@ -139,13 +164,12 @@ public class ViewFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        backBtn.setVisibility(View.GONE);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
     }
+
 }

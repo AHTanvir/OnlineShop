@@ -86,7 +86,6 @@ public class productFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_product, container, false);
-        ((HomeActivity)getActivity()).imageTransition(view);
         productRecyclerView=(RecyclerView)view.findViewById(R.id.product_recycler_view);
         layoutManager=new GridLayoutManager(getActivity(),2);
         RowItem ro0 = new RowItem(R.drawable.w6,"T-SHART","descriptio"," Tk 100");

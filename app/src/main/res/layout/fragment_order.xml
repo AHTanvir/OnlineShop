@@ -1,0 +1,105 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#336633"
+    tools:context="anwar.onlineshop.Fragment.OrderFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:text="Online Shop"
+        android:id="@+id/texxxxxxxxx"
+        android:textSize="30dp"
+        android:padding="20dp"
+        android:textColor="@color/cardview_light_background"
+        tools:ignore="HardcodedText,SpUsage" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/text_name"
+            android:hint="Name"
+            android:textColorHint="@color/cardview_light_background"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            tools:ignore="HardcodedText"
+            android:maxLines="1" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/text_addre"
+            android:hint="Address"
+            android:textColorHint="@color/cardview_light_background"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            tools:ignore="HardcodedText"
+            android:maxLines="1" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/text_city"
+            android:hint="City"
+            android:textColorHint="@color/cardview_light_background"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            tools:ignore="HardcodedText"
+            android:maxLines="1" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/text_email"
+            android:hint="Email"
+            android:textColorHint="@color/cardview_light_background"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            tools:ignore="HardcodedText"
+            android:maxLines="1" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/text_phone"
+            android:hint="Phone"
+            android:textColorHint="@color/cardview_light_background"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            tools:ignore="HardcodedText"
+            android:maxLines="1" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#339933"
+            android:id="@+id/confrom_order"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Confrom"
+            android:textColor="@color/cardview_light_background"
+            tools:ignore="HardcodedText"
+            />
+    </LinearLayout>
+
+</LinearLayout>

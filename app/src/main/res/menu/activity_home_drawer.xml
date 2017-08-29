@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_share"
+        android:icon="@drawable/ic_menu_share"
+        android:title="Home" />
+    <item
+        android:id="@+id/mycart"
+        android:icon="@drawable/ic_menu_share"
+        android:title="My Cart" />
+    <item
+        android:id="@+id/Address"
+        android:icon="@drawable/ic_menu_share"
+        android:title="Adress" />
+    <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Send" />
+    <item
+        android:id="@+id/About"
+        android:icon="@drawable/ic_menu_share"
+        android:title="About" />
+    <item
+        android:id="@+id/Exit"
+        android:icon="@drawable/ic_menu_send"
+        android:title="Exit" />
 
-
-    <item android:title="Gategories">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
 
 </menu>
