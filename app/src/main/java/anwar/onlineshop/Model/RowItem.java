@@ -1,4 +1,4 @@
-package anwar.onlineshop.Adapter;
+package anwar.onlineshop.Model;
 
 import android.graphics.Bitmap;
 

@@ -1,19 +1,13 @@
 package anwar.onlineshop.Fragment;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +18,7 @@ import java.util.List;
 
 import anwar.onlineshop.Adapter.RecyclerItemClickListener;
 import anwar.onlineshop.Adapter.homeRecyclerAdapter;
-import anwar.onlineshop.Adapter.RowItem;
+import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.Adapter.sellerRecyclerAdapter;
 import anwar.onlineshop.HomeActivity;
 import anwar.onlineshop.R;

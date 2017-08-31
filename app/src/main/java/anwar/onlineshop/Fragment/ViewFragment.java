@@ -24,6 +24,9 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import com.xgc1986.ripplebutton.widget.RippleButton;
+import com.xgc1986.ripplebutton.widget.RippleImageButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,12 +48,15 @@ public class ViewFragment extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+//    int buttonColor = getResources().getColor(android.R.color.holo_red_light);
+  //  int rippleColor = getResources().getColor(android.R.color.holo_blue_light);
     private PopupWindow popupWindow;
     private Spinner spColor,spSize;
     private SpinnerAdapter  spinneradapter;
     private LinearLayout menuLayout;
+    private RippleButton addToCart,orderBtn;
     private TextView brand_name,product_id,size,color,price;
-    private Button orderBtn,backBtn;
+    private Button backBtn;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ImageView image;
     private String colorList[]=new String[]{"RED","GREEN","BLUE","WHITE","BLACK"};
@@ -102,15 +108,17 @@ public class ViewFragment extends Fragment implements View.OnClickListener {
         collapsingToolbarLayout.setTitle("Fragment");
         image=(ImageView)view.findViewById(R.id.toolbart_product_img);
         image.setImageResource(R.drawable.women);
-        backBtn=(Button)view.findViewById(R.id.view_backBtn);
+        backBtn=(Button) view.findViewById(R.id.view_backBtn);
         backBtn.setVisibility(View.VISIBLE);
         brand_name=(TextView)view.findViewById(R.id.brand_name);
         product_id=(TextView)view.findViewById(R.id.product_id);
         size=(TextView)view.findViewById(R.id.size);
         color=(TextView)view.findViewById(R.id.color);
-        orderBtn=(Button) view.findViewById(R.id.order);
+        orderBtn=(RippleButton) view.findViewById(R.id.order);
+        addToCart=(RippleButton)view.findViewById(R.id.add_to_cart);
         orderBtn.setOnClickListener(this);
-        backBtn.setOnClickListener(this);
+       backBtn.setOnClickListener(this);
+        addToCart.setOnClickListener(this);
         return view;
     }
 
@@ -140,10 +148,10 @@ public class ViewFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        OrderFragment orderFragment=new OrderFragment();
+/*        OrderFragment orderFragment=new OrderFragment();
         FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
-                orderFragment, orderFragment.getTag()).addToBackStack(null).commit();
+                orderFragment, orderFragment.getTag()).addToBackStack(null).commit();*/
     }
 
     /**

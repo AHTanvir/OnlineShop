@@ -3,24 +3,20 @@ package anwar.onlineshop.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import anwar.onlineshop.Adapter.RecyclerItemClickListener;
-import anwar.onlineshop.Adapter.RowItem;
+import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.Adapter.categoryRecyclerAdapter;
-import anwar.onlineshop.Adapter.recomListAdapter;
 import anwar.onlineshop.Adapter.recomRecyclerAdapter;
 import anwar.onlineshop.HomeActivity;
 import anwar.onlineshop.R;

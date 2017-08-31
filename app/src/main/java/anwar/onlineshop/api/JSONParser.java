@@ -6,11 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import anwar.onlineshop.Adapter.RowItem;
+import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.consts;
 
 /**

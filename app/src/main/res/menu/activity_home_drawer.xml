@@ -3,12 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/nav_share"
-        android:icon="@drawable/ic_menu_share"
+        android:icon="@drawable/ic_home_black"
         android:title="Home" />
     <item
         android:id="@+id/mycart"
-        android:icon="@drawable/ic_menu_share"
+        android:icon="@drawable/ic_shopping_cart"
         android:title="My Cart" />
+    <item android:title="Categories">
+        <menu>
+            <item
+                android:id="@+id/nav_man"
+                android:title="Man"/>
+            <item
+                android:id="@+id/nav_women"
+                android:title="Women"/>
+            </menu>
+    </item>
     <item
         android:id="@+id/Address"
         android:icon="@drawable/ic_menu_share"
@@ -19,11 +29,11 @@
             android:title="Send" />
     <item
         android:id="@+id/About"
-        android:icon="@drawable/ic_menu_share"
+        android:icon="@drawable/ic_description"
         android:title="About" />
     <item
         android:id="@+id/Exit"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/ic_exit"
         android:title="Exit" />
 
 

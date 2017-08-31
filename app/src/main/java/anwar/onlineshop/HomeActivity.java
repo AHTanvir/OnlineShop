@@ -34,6 +34,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import static anwar.onlineshop.R.id.*;
@@ -43,6 +45,7 @@ import anwar.onlineshop.Fragment.CategoryFragment;
 import anwar.onlineshop.Fragment.CyclicTransitionDrawable;
 import anwar.onlineshop.Fragment.HomeFragment;
 import anwar.onlineshop.Fragment.OrderFragment;
+import anwar.onlineshop.Fragment.ViewFragment;
 import anwar.onlineshop.api.EndPoints;
 import anwar.onlineshop.api.JsonRequest;
 import anwar.onlineshop.api.OkHttpStack;
@@ -65,12 +68,65 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         HomeFragment homeFragment=new HomeFragment();
         OrderFragment orderFragment=new OrderFragment();
+        ViewFragment v=new ViewFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
                 homeFragment, homeFragment.getTag()).commit();
        //ShowAndHide();
-        init();
+       // init();
+        test();
        //volley();
+    }
+    public  void test(){
+        JSONArray array = new JSONArray();
+        try {
+            JSONObject obj1 = new JSONObject();
+            obj1.put("id", "01");
+            obj1.put("name", "John");
+            obj1.put("number", "010");
+
+            JSONObject obj2 = new JSONObject();
+            obj2.put("id", "02");
+            obj2.put("name", "Mike");
+            obj2.put("number", "020");
+            array.put(obj1);
+
+            array.put(obj2);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONArray array2 = new JSONArray(array.toString());
+            JSONObject obj = new JSONObject();
+            obj.put("id","namw");
+            obj.put("name","namw");
+            obj.put("number","namw");
+            array2.put(obj);
+            JSONArray ar = new JSONArray(array2.toString());
+            for (int i = 0; i <ar.length() ; i++) {
+                JSONObject job=ar.getJSONObject(i);
+                System.out.println(job.getString("id"));
+                System.out.println(job.getString("name"));
+                System.out.println(job.getString("number"));
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+   /*     JSONObject ob=new JSONObject();
+        try {
+            ob.put("name","Tanvir");
+            JSONArray js=new JSONArray(ob.toString());
+            JSONObject obj2 = new JSONObject();
+            obj2.put("student", js.toString());
+            System.out.println("json obj1 "+obj2);
+            //JSONObject ob1=new JSONObject(obj2.toString());
+           // ob1.put("name","husen");
+           // System.out.println("json obj1 "+ob1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
     }
     public void init(){
         queue = Volley.newRequestQueue(this);

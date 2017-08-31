@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.R;
 
 
