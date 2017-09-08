@@ -9,9 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import anwar.onlineshop.Interface.OnItemClickListeners;
+import anwar.onlineshop.Model.ProductModel;
 import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.R;
 
@@ -20,10 +24,12 @@ import anwar.onlineshop.R;
  */
 
 public class sellerRecyclerAdapter extends RecyclerView.Adapter<sellerRecyclerAdapter.MyViewHolder>{
-    private List<RowItem> rowItems =new ArrayList<>();
+    private List<ProductModel> productModel =new ArrayList<>();
     private Context context;
-    public sellerRecyclerAdapter(List<RowItem> rowItems) {
-        this.rowItems = rowItems;
+    private OnItemClickListeners listeners;
+    public sellerRecyclerAdapter(List<ProductModel> productModel, OnItemClickListeners listeners) {
+        this.productModel = productModel;
+        this.listeners = listeners;
     }
 
     @Override
@@ -35,16 +41,37 @@ public class sellerRecyclerAdapter extends RecyclerView.Adapter<sellerRecyclerAd
     }
 
     @Override
-    public void onBindViewHolder(sellerRecyclerAdapter.MyViewHolder holder, int position) {
-        RowItem pos= rowItems.get(position);
-        holder.image.setImageResource(pos.getDrawable());
+    public void onBindViewHolder(sellerRecyclerAdapter.MyViewHolder holder, final int position) {
+        ProductModel pos= productModel.get(position);
+        Picasso.with(context).load(Integer.parseInt(pos.getUrl())).into(holder.image);
+        //Picasso.with(context).load(pos.getUrl()).into(holder.image);
+       // holder.image.setImageResource(pos.getDrawable());
         holder.name.setText(pos.getName());
-        holder.price.setText(pos.getPrice());
+        holder.price.setText("Tk " +pos.getPrice());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listeners.onClick(v.getRootView(),position);
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listeners.onClick(v.getRootView().findViewById(R.id.home_bestseller_list),position);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listeners.onLongClick(v.getRootView().findViewById(R.id.home_bestseller_list),position);
+                return false;
+            }
+        });
 
     }
     @Override
     public int getItemCount() {
-        return rowItems.size();
+        return productModel.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

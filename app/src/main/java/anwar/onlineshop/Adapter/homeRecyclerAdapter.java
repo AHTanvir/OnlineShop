@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import anwar.onlineshop.Interface.OnItemClickListeners;
 import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.R;
 
@@ -27,8 +28,11 @@ import anwar.onlineshop.R;
 public class homeRecyclerAdapter extends RecyclerView.Adapter<homeRecyclerAdapter.MyViewHolder> implements View.OnClickListener{
     private List<RowItem> rowItems =new ArrayList<>();
     private Context context;
-    public homeRecyclerAdapter(List<RowItem> rowItems) {
+    private OnItemClickListeners listeners;
+
+    public homeRecyclerAdapter(List<RowItem> rowItems, OnItemClickListeners listeners) {
         this.rowItems = rowItems;
+        this.listeners = listeners;
     }
 
     @Override
@@ -40,12 +44,31 @@ public class homeRecyclerAdapter extends RecyclerView.Adapter<homeRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         YoYo.with(Techniques.FadeIn).playOn(holder.cardView);
         RowItem pos= rowItems.get(position);
-        //holder.image.setImageResource(pos.getDrawable());
-        Picasso.with(context).load(pos.getDrawable()).into(holder.image);
+        holder.image.setImageResource(pos.getDrawable());
+        //Picasso.with(context).load(Integer.parseInt(pos.getUrl())).into(holder.image);
         holder.text.setText(pos.getCatagory());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listeners.onClick(v.getRootView(),position);
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listeners.onClick(v.getRootView().findViewById(R.id.home_recyclerView),position);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listeners.onLongClick(v.getRootView().findViewById(R.id.home_recyclerView),position);
+                return false;
+            }
+        });
 
     }
 

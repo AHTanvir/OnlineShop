@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,12 +19,16 @@ import java.util.List;
 
 import anwar.onlineshop.Adapter.RecyclerItemClickListener;
 import anwar.onlineshop.Adapter.homeRecyclerAdapter;
+import anwar.onlineshop.Interface.OnItemClickListeners;
+import anwar.onlineshop.Model.ProductModel;
 import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.Adapter.sellerRecyclerAdapter;
 import anwar.onlineshop.HomeActivity;
 import anwar.onlineshop.R;
+import anwar.onlineshop.api.FakeProducts;
 
 import static anwar.onlineshop.R.id.Relative_layoutfor_fragments;
+import static anwar.onlineshop.consts.SELECTED_PRODUCT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +38,7 @@ import static anwar.onlineshop.R.id.Relative_layoutfor_fragments;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener {
+public class HomeFragment extends Fragment implements OnItemClickListeners {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,13 +51,15 @@ public class HomeFragment extends Fragment implements RecyclerItemClickListener.
     private RecyclerView bestSellerRecyclerView;
     private RecyclerView.Adapter recycleradapter;
     private RecyclerView.Adapter sellerAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private GridLayoutManager layoutManager;
     private RecyclerView.LayoutManager layoutManager1;
     private List<RowItem> rowitem = new ArrayList<>();
-    private List<RowItem> rowitem1 = new ArrayList<>();
+    private List<ProductModel> productModels = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private OnItemClickListeners listeners=(OnItemClickListeners)this;
     private ImageView collapsing_image;
+    private FakeProducts fakeProducts=new FakeProducts();
     private Thread thread;
 
     public HomeFragment() {
@@ -91,16 +98,12 @@ public class HomeFragment extends Fragment implements RecyclerItemClickListener.
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view= inflater.inflate(R.layout.fragment_home, container, false);
-        ((HomeActivity)getActivity()).imageTransition(view,getActivity());
+        ((HomeActivity)getActivity()).imageTransition(view,getActivity(),"Online Shop");
         recyclerView=(RecyclerView)view.findViewById(R.id.home_recyclerView);
         bestSellerRecyclerView=(RecyclerView)view.findViewById(R.id.home_bestseller_list);
-        //collapsingToolbarLayout.setTitle("Colla.......");
-       RowItem ro = new RowItem(R.drawable.men,"MEN");
-        rowitem.add(ro);
-       RowItem ro1 = new RowItem(R.drawable.women,"WOMEN");
-        rowitem.add(ro1);
-        recycleradapter = new homeRecyclerAdapter(rowitem);
-        layoutManager = new LinearLayoutManager(getActivity());
+        rowitem=fakeProducts.getHomeCategories();
+        recycleradapter = new homeRecyclerAdapter(rowitem,listeners);
+        layoutManager = new GridLayoutManager(getActivity(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recycleradapter);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), recyclerView, new RecyclerItemClickListener
@@ -108,7 +111,7 @@ public class HomeFragment extends Fragment implements RecyclerItemClickListener.
             @Override
             public void onItemClick(View view, int position) {
 
-                CategoryFragment categoryFragment=new CategoryFragment();
+                CategoryFragment categoryFragment=new CategoryFragment().newInstance(rowitem.get(position).getCatagory()," ");
                 FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
                         categoryFragment, categoryFragment.getTag()).addToBackStack(null).commit();
@@ -119,13 +122,8 @@ public class HomeFragment extends Fragment implements RecyclerItemClickListener.
             }
         }));
         //////////////////////////////
-        RowItem ro0 = new RowItem(R.drawable.w6,"T-SHART","100");
-        rowitem1.add(ro0);
-        RowItem ro11 = new RowItem(R.drawable.women4,"WOMEN","100");
-        rowitem1.add(ro11);
-        RowItem ro2 = new RowItem(R.drawable.watch,"MEN","100");
-        rowitem1.add(ro2);
-        sellerAdapter = new sellerRecyclerAdapter(rowitem1);
+        productModels=fakeProducts.getBestSellerProducts();
+        sellerAdapter = new sellerRecyclerAdapter(productModels,listeners);
         layoutManager1 = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         bestSellerRecyclerView.setLayoutManager(layoutManager1);
         bestSellerRecyclerView.setAdapter(sellerAdapter);
@@ -133,10 +131,11 @@ public class HomeFragment extends Fragment implements RecyclerItemClickListener.
                 .OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                CategoryFragment categoryFragment=new CategoryFragment();
+                getActivity().getIntent().putExtra(SELECTED_PRODUCT,productModels.get(position));
+                ViewFragment viewFragment=new ViewFragment();
                 FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
-                        categoryFragment, categoryFragment.getTag()).addToBackStack(null).commit();
+                        viewFragment, viewFragment.getTag()).addToBackStack(null).commit();
             }
 
             @Override
@@ -170,13 +169,25 @@ public class HomeFragment extends Fragment implements RecyclerItemClickListener.
         mListener = null;
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
 
+    @Override
+    public void onClick(View v, int position) {
+        CategoryFragment categoryFragment=new CategoryFragment().newInstance(rowitem.get(position).getCatagory()," ");
+        FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+        switch (v.getId()){
+            case R.id.home_recyclerView:
+                fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
+                        categoryFragment, categoryFragment.getTag()).addToBackStack(null).commit();
+                break;
+            case R.id.home_bestseller_list:
+                fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
+                        categoryFragment, categoryFragment.getTag()).addToBackStack(null).commit();
+                break;
+        }
     }
 
     @Override
-    public void onItemLongClick(View view, int position) {
+    public void onLongClick(View v, int position) {
 
     }
 

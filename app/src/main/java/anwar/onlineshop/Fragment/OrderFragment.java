@@ -1,6 +1,7 @@
 package anwar.onlineshop.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,11 +25,24 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import anwar.onlineshop.Adapter.spinnerAdapter;
 import anwar.onlineshop.HomeActivity;
+import anwar.onlineshop.Model.AddressModel;
+import anwar.onlineshop.Model.CartModel;
+import anwar.onlineshop.Model.ProductModel;
 import anwar.onlineshop.R;
+import anwar.onlineshop.api.JsonObjectUtil;
 
 import static anwar.onlineshop.R.id.Relative_layoutfor_fragments;
+import static anwar.onlineshop.consts.CART_LIST;
+import static anwar.onlineshop.consts.NAME;
+import static anwar.onlineshop.consts.SELECTED_PRODUCT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,11 +59,14 @@ public class OrderFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM2 = "param2";
     private ListPopupWindow popupWindow;
     private Spinner spColor,spSize;
+    private  ArrayList<CartModel> cartList=new ArrayList<>();
     private spinnerAdapter spinneradapter;
+    private CartModel cartModel;
     private LinearLayout menuLayout;
     private EditText name,address,city,email,phone;
     private  Button spinnerOk,confrom_order;
     private spinnerAdapter spinnerAdapter;
+    ArrayList<AddressModel> addressModels=new ArrayList<>();
     private String colorList[]=new String[]{"Select Color","RED","GREEN","BLUE","WHITE","BLACK"};
     private String sizeList[]=new String[]{"Select Size","SMALL","MEDIUM","LARGE","EXTRA"};
     // TODO: Rename and change types of parameters
@@ -94,6 +111,7 @@ public class OrderFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_order, container, false);
+        getExtraParam();
         name=(EditText)view.findViewById(R.id.text_name);
         address=(EditText)view.findViewById(R.id.text_addre);
         city=(EditText)view.findViewById(R.id.text_city);
@@ -101,14 +119,6 @@ public class OrderFragment extends Fragment implements View.OnClickListener {
         phone=(EditText)view.findViewById(R.id.text_phone);
         confrom_order=(Button) view.findViewById(R.id.confrom_order);
         confrom_order.setOnClickListener(this);
-        Handler h=new Handler();
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ListDialog(view);
-            }
-        },200);
-
         return view;
     }
 
@@ -140,23 +150,48 @@ public class OrderFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.confrom_order:
-                if(name.getText().length() >=6 && address.getText().length()>=12 && city.getText().length()>=4){
-                    if(phone.getText().length()>10){
-                        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-                        for (int i = 0; i <fragmentManager.getBackStackEntryCount() ; i++) {
-                            fragmentManager.popBackStack();
+                if(address.getText().length() >=0 && phone.getText().length()>=0 ){
+                    AddressModel addressModel=new AddressModel(name.getText().toString(),address.getText().toString(),
+                            city.getText().toString(),email.getText().toString(),phone.getText().toString());
+                    JsonObjectUtil objectUtil=  new JsonObjectUtil();
+                    JSONObject jsonObject=objectUtil.CreateOrderObject(cartList,addressModel);
+                    try{
+                        JSONArray ja=jsonObject.getJSONArray("Address");
+                        for (int i = 0; i <ja.length() ; i++) {
+                            JSONObject j=ja.getJSONObject(i);
+                            System.out.println("parse Address "+j.getString("name")+" "+j.getString("address")+" "+j.getString("city")
+                                    +" "+j.getString("email")+" "+j.getString("phone") );
                         }
-                        HomeFragment homeFragment=new HomeFragment();
-                        fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
-                                homeFragment, homeFragment.getTag()).commit();
-                    }else Toast.makeText(getActivity()," Make sure your phone is correct",Toast.LENGTH_SHORT).show();
-                }else Toast.makeText(getActivity()," Make sure your information is correct",Toast.LENGTH_SHORT).show();
+                        ja=jsonObject.getJSONArray("Order");
+                        for (int i = 0; i <ja.length() ; i++) {
+                            JSONObject j=ja.getJSONObject(i);
+                            System.out.println("parse Order "+j.getString("productid")+" "+j.getString("name")+" "+j.getString("size")
+                                    +" "+j.getString("color")+" "+j.getString("price")+" "+j.getString("quantity")+" "+j.getString("imageurl") );
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                ((HomeActivity)getActivity()).onBackPressed();
                 break;
-            case R.id.spinner_ok:
-                if(!spColor.getSelectedItem().equals("Select Color") && !spSize.getSelectedItem().equals("Select Size"))
-                    popupWindow.dismiss();
-                else Toast.makeText(getActivity()," Please choose color and size",Toast.LENGTH_SHORT).show();
-                break;
+        }
+    }
+
+    public void getExtraParam() {
+        Intent intent=getActivity().getIntent();
+        if(!intent.equals(null)){
+            if(intent.getStringExtra(NAME).equals("CartFragment")){
+                cartList=intent.getParcelableArrayListExtra(CART_LIST);
+                System.out.println("param "+intent.getParcelableArrayListExtra(CART_LIST));
+                for (int i = 0; i <cartList.size() ; i++) {
+                    System.out.println("Id "+cartList.get(i).getProductid()+"\n"+"Name "+cartList.get(i).getName());
+                }
+            }
+            else if (intent.getStringExtra(NAME).equals("ViewFragment")){
+                cartModel=(CartModel)intent.getParcelableExtra(SELECTED_PRODUCT);
+                cartList.add(cartModel);
+                System.out.println("Id "+cartModel.getProductid()+"\n"+"Name "+cartModel.getName()+"\n"+"price "+cartModel.getPrice());
+            }
         }
     }
 
@@ -174,36 +209,7 @@ public class OrderFragment extends Fragment implements View.OnClickListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    private void ListDialog(View view){
-        popupWindow = new ListPopupWindow(getActivity());
-        LayoutInflater inflater= getActivity().getLayoutInflater();
-        View v=inflater.inflate(R.layout.ch_spinner, null);
-        spColor=(Spinner)v.findViewById(R.id.spinner_color);
-        spSize=(Spinner)v.findViewById(R.id.spinner_size);
-        spinnerOk=(Button)v.findViewById(R.id.spinner_ok);
-        addItemOnSpinner();
-        spinnerOk.setOnClickListener(this);
-        popupWindow.setPromptView(v);
-        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindow.setAnchorView(view.findViewById(R.id.texxxxxxxxx));
-        popupWindow.setWidth(250);
-        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.cardview_light_background));
-        popupWindow.show();
-    }
-    private void addItemOnSpinner() {
-/*        spinneradapter = new spinnerAdapter(getActivity(), R.layout.custom_spinner_item);
-        spinneradapter.addAll(colorList);
-        spinneradapter.add("Select Blood Group");
-        spinneradapter.setDropDownViewResource(R.layout.custom_spinner_item);
-        spColor.setAdapter(spinneradapter);
-        spColor.setSelection(spinneradapter.getCount());*/
-        ArrayAdapter adapter=new ArrayAdapter<>(getActivity(),R.layout.custom_spinner_item,colorList);
-        adapter.setDropDownViewResource(R.layout.custom_spinner_item);
-        spColor.setAdapter(adapter);
-        ArrayAdapter adapter1=new ArrayAdapter<>(getActivity(),R.layout.custom_spinner_item,sizeList);
-        adapter1.setDropDownViewResource(R.layout.custom_spinner_item);
-        spSize.setAdapter(adapter1);
-    }
+
 
     @Override
     public String toString() {
@@ -219,6 +225,5 @@ public class OrderFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onPause() {
         super.onPause();
-        popupWindow.dismiss();
     }
 }

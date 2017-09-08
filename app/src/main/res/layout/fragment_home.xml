@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="#D9E6FD"
+    android:fillViewport="true"
     tools:context="anwar.onlineshop.Fragment.HomeFragment">
     <include layout="@layout/collapsing_toolbar"
     android:id="@+id/appbar_layout"/>
@@ -21,7 +22,7 @@
             android:id="@+id/home_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dimgrey"
+            android:background="#8894ac"
             android:text="Categories"
             android:padding="5dp"
             android:textAlignment="center"
@@ -31,13 +32,14 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/home_recyclerView"
             android:layout_width="match_parent"
+            android:padding="3dp"
             android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
         <TextView
             android:id="@+id/home_recyclerText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dimgrey"
+            android:background="#8894ac"
             android:padding="10dp"
             android:text="Best Sellers"
             android:textAlignment="center"
@@ -46,7 +48,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/home_bestseller_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            android:padding="3dp"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

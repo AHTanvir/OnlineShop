@@ -1,10 +1,13 @@
 package anwar.onlineshop.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by anwar on 8/31/2017.
  */
 
-public class cartModel {
+public class CartModel implements Parcelable{
     private String productid;
     private String name;
     private String size;
@@ -13,7 +16,7 @@ public class cartModel {
     private String quantity;
     private String imageurl;
 
-    public cartModel(String productid, String name, String size, String color, String price, String quantity, String imageurl) {
+    public CartModel(String productid, String name, String size, String color, String price, String quantity, String imageurl) {
         this.productid = productid;
         this.name = name;
         this.size = size;
@@ -21,6 +24,15 @@ public class cartModel {
         this.price = price;
         this.quantity = quantity;
         this.imageurl = imageurl;
+    }
+    public CartModel(Parcel parcel){
+        productid=parcel.readString();
+        name=parcel.readString();
+        size=parcel.readString();
+        color=parcel.readString();
+        price=parcel.readString();
+        quantity=parcel.readString();
+        imageurl=parcel.readString();
     }
 
     public String getProductid() {
@@ -78,4 +90,29 @@ public class cartModel {
     public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(productid);
+        parcel.writeString(name);
+        parcel.writeString(size);
+        parcel.writeString(color);
+        parcel.writeString(name);
+        parcel.writeString(price);
+        parcel.writeString(quantity);
+        parcel.writeString(imageurl);
+    }
+    public static final Parcelable.Creator<CartModel> CREATOR = new
+            Parcelable.Creator<CartModel>() {
+                public CartModel createFromParcel(Parcel in) {
+                    return new CartModel(in);
+                }
+                public CartModel[] newArray(int size) {
+                    return new CartModel[size];
+                }};
 }

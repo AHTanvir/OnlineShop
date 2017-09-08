@@ -15,13 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import anwar.onlineshop.Adapter.RecyclerItemClickListener;
+import anwar.onlineshop.Interface.OnItemClickListeners;
+import anwar.onlineshop.Model.ProductModel;
 import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.Adapter.categoryRecyclerAdapter;
 import anwar.onlineshop.Adapter.recomRecyclerAdapter;
 import anwar.onlineshop.HomeActivity;
 import anwar.onlineshop.R;
+import anwar.onlineshop.api.FakeProducts;
 
 import static anwar.onlineshop.R.id.Relative_layoutfor_fragments;
+import static anwar.onlineshop.consts.SELECTED_PRODUCT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +35,7 @@ import static anwar.onlineshop.R.id.Relative_layoutfor_fragments;
  * Use the {@link CategoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CategoryFragment extends Fragment{
+public class CategoryFragment extends Fragment implements OnItemClickListeners {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,8 +51,10 @@ public class CategoryFragment extends Fragment{
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.LayoutManager layoutManager1;
     private List<RowItem> cgList=new ArrayList<>();
-    private List<RowItem> rcList=new ArrayList<>();
-    private productFragment productfragment;
+    private List<ProductModel> productModels=new ArrayList<>();
+    private ProductFragment vf;
+    private OnItemClickListeners listeners=(OnItemClickListeners)this;
+    private FakeProducts fakeProducts=new FakeProducts();
 
     private OnFragmentInteractionListener mListener;
 
@@ -88,40 +94,48 @@ public class CategoryFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view= inflater.inflate(R.layout.fragment_category, container, false);
-        ((HomeActivity)getActivity()).imageTransition(view,getActivity());
+        ((HomeActivity)getActivity()).imageTransition(view,getActivity(),mParam1);
         categoryList=(RecyclerView) view.findViewById(R.id.category_list);
         categoryRecom=(RecyclerView) view.findViewById(R.id.category_recomList);
-        for (int i = 0; i <3 ; i++) {
-            RowItem r=new RowItem("Category","100");
-            cgList.add(r);
-        }
-        listadapter=new categoryRecyclerAdapter(cgList);
+        cgList=fakeProducts.getProductType(mParam1);
+        listadapter=new categoryRecyclerAdapter(cgList,listeners);
         layoutManager = new LinearLayoutManager(getActivity());
         categoryList.setLayoutManager(layoutManager);
         categoryList.setAdapter(listadapter);
-        RowItem ro0 = new RowItem(R.drawable.w6,"T-SHART","descriptio"," Tk 100");
-        rcList.add(ro0);
-        RowItem ro11 = new RowItem(R.drawable.women4,"WOMEN"," descriptio"," Tk 100");
-        rcList.add(ro11);
-        RowItem ro2 = new RowItem(R.drawable.watch,"MEN"," descriptio"," Tk 100");
-        rcList.add(ro2);
-        recomAdapter=new recomRecyclerAdapter(rcList);
+        productModels=fakeProducts.getRecomProduct();
+        recomAdapter=new recomRecyclerAdapter(productModels,listeners);
         layoutManager1 = new LinearLayoutManager(getActivity());
         categoryRecom.setLayoutManager(layoutManager1);
         categoryRecom.setAdapter(recomAdapter);
-        categoryList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),categoryList, new RecyclerItemClickListener
+/*        categoryRecom.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),categoryRecom, new RecyclerItemClickListener
                 .OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                productfragment=new productFragment();
+                getActivity().getIntent().putExtra(SELECTED_PRODUCT,productModels.get(position));
+                ViewFragment vf=new ViewFragment();
                 FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
-                        productfragment, productfragment.getTag()).addToBackStack(null).commit();
+                        vf, vf.getTag()).addToBackStack(null).commit();
             }
             @Override
             public void onItemLongClick(View v, int position) {
             }
-        }));
+        }));*/
+/*        categoryList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),categoryList, new RecyclerItemClickListener
+                .OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if(cgList.get(position).getTotal() !="0"){
+                    vf=new ProductFragment().newInstance(mParam1,cgList.get(position).getCatagory());
+                    FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
+                            vf, vf.getTag()).addToBackStack(null).commit();
+                }
+            }
+            @Override
+            public void onItemLongClick(View v, int position) {
+            }
+        }));*/
         return view;
     }
 
@@ -147,6 +161,33 @@ public class CategoryFragment extends Fragment{
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v, int position) {
+        switch (v.getId()){
+            case R.id.category_list:
+                if(cgList.get(position).getTotal() !="0"){
+                    vf=new ProductFragment().newInstance(mParam1,cgList.get(position).getCatagory());
+                    FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
+                            vf, vf.getTag()).addToBackStack(null).commit();
+                }
+                break;
+            case R.id.category_recomList:
+                getActivity().getIntent().putExtra(SELECTED_PRODUCT,productModels.get(position));
+                ViewFragment vf=new ViewFragment();
+                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
+                        vf, vf.getTag()).addToBackStack(null).commit();
+                break;
+        }
+
+    }
+
+    @Override
+    public void onLongClick(View v, int position) {
+
     }
 
 

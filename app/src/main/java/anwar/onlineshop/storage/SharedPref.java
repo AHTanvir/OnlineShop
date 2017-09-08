@@ -1,4 +1,4 @@
-package storage;
+package anwar.onlineshop.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import anwar.onlineshop.Model.cartModel;
+import anwar.onlineshop.Model.CartModel;
 
 /**
  * Created by anwar on 8/31/2017.
@@ -18,7 +18,7 @@ import anwar.onlineshop.Model.cartModel;
 
 public class SharedPref {
     private SharedPreferences pref;
-    private cartModel cartmodel;
+    private CartModel cartmodel;
     private SharedPreferences.Editor editor;
     private Context context;
     int PRIVATE_MODE = 0;
@@ -33,21 +33,21 @@ public class SharedPref {
     private  static final String PRICE="price";
     private  static final String QUANTITY="quantity";
     private  static final String IMGURL="imageurl";
+    private  int Totalcost;
 
     public SharedPref(Context context) {
         this.context = context;
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE); //1
         editor = pref.edit();
     }
-    public void clearSharedPreference(Context context) {
+    public void clearSharedPreference() {
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = pref.edit();
-
         editor.clear();
         editor.commit();
     }
 
-    public void removeValue(Context context) {
+    public void removeValue() {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
 
@@ -57,7 +57,8 @@ public class SharedPref {
         editor.remove(PREFS_KEY);
         editor.commit();
     }
-    public void putCartItem(cartModel cartmodel) {
+    public int putCartItem(CartModel cartmodel) {
+        int total_item=0;
         JSONArray array=null;
         String json=pref.getString(CART_KEY, null);
         try {
@@ -73,32 +74,53 @@ public class SharedPref {
             obj.put(QUANTITY,cartmodel.getQuantity());
             obj.put(IMGURL,cartmodel.getImageurl());
             array.put(obj);
+            total_item=array.length();
         } catch (JSONException e) {
             e.printStackTrace();
         }
         editor = pref.edit();
         editor.putString(CART_KEY, array.toString());
         editor.commit();
+        return total_item;
     }
-    public List getCartItem() {
-        List<cartModel> cartModelList=new ArrayList<>();
+    public ArrayList<CartModel> getCartItem() {
+        ArrayList<CartModel> cartModelList=new ArrayList<>();
         String json = pref.getString(CART_KEY, null);
         if(json !=null){
+            int Totalcost=0;
             try {
                 JSONArray array = new JSONArray(json);
                 for (int i = 0; i <array.length() ; i++) {
                     JSONObject job=array.getJSONObject(i);
-                    cartModel model=new cartModel(job.getString(PRODUCTID),job.getString(NAME),job.getString(COLOR),
+                    CartModel model=new CartModel(job.getString(PRODUCTID),job.getString(NAME),job.getString(COLOR),
                             job.getString(SIZE),job.getString(PRICE),job.getString(QUANTITY),job.getString(IMGURL));
                     cartModelList.add(model);
+                    Totalcost=Totalcost+Integer.parseInt(job.getString(PRICE));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            this.Totalcost=Totalcost;
         }
         return  cartModelList;
     }
-   /* JSONObject obj = new JSONObject();
+
+    public int getTotalcost() {
+        return Totalcost;
+    }
+    public int getCartQuantity() {
+        String json=pref.getString(CART_KEY, null);
+        JSONArray jsonArray= null;
+        if(json !=null)
+        {
+            try {
+                jsonArray = new JSONArray(json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }return jsonArray.length();
+        }else return 0;
+    }
+    /* JSONObject obj = new JSONObject();
             try {
         obj.put("id", "3");
         obj.put("name", "NAME OF STUDENT");

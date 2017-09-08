@@ -23,7 +23,6 @@ public class CyclicTransitionDrawable extends LayerDrawable implements Drawable.
     protected long duration;
     protected long startTimeMillis;
     protected long pauseDuration;
-
     protected TransitionState transitionStatus;
 
     public CyclicTransitionDrawable(Drawable[] drawables) {
@@ -39,7 +38,6 @@ public class CyclicTransitionDrawable extends LayerDrawable implements Drawable.
         startTimeMillis = SystemClock.uptimeMillis();
         transitionStatus = TransitionState.PAUSED;
         currentDrawableIndex = 0;
-
         invalidateSelf();
     }
 

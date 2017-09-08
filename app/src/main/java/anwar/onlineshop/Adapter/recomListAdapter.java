@@ -9,8 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
+import anwar.onlineshop.Model.ProductModel;
 import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.R;
 
@@ -20,12 +23,12 @@ import anwar.onlineshop.R;
 
 public class recomListAdapter extends BaseAdapter {
     Context context;
-    List<RowItem> rowItems;
+    List<ProductModel> productModels;
     private LayoutInflater inflater;
 
-    public recomListAdapter(Context context, List<RowItem> rowItems) {
+    public recomListAdapter(Context context, List<ProductModel> productModels) {
         this.context = context;
-        this.rowItems = rowItems;
+        this.productModels = productModels;
     }
 
     public recomListAdapter(Context context) {
@@ -33,15 +36,15 @@ public class recomListAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return rowItems.size();
+        return productModels.size();
     }
 
     public Object getItem(int position) {
-        return rowItems.get(position);
+        return productModels.get(position);
     }
 
     public long getItemId(int position) {
-        return rowItems.indexOf(getItem(position));
+        return productModels.indexOf(getItem(position));
     }
 
     private class ViewHolder {
@@ -66,17 +69,17 @@ public class recomListAdapter extends BaseAdapter {
         } else {
             holder = (recomListAdapter.ViewHolder) convertView.getTag();
         }
-        RowItem row_pos = rowItems.get(position);
-        holder.imageView.setImageResource(row_pos.getDrawable());
+        ProductModel row_pos = productModels.get(position);
+      //  holder.imageView.setImageResource(row_pos.getDrawable());
         holder.name.setText(row_pos.getName());
         holder.details.setText(row_pos.getDetails());
-        holder.price.setText(row_pos.getPrice());
+        holder.price.setText("Tk "+row_pos.getPrice());
         return convertView;
     }
 
-    public void updateAdapter(List<RowItem> updateList) {
+    public void updateAdapter(List<ProductModel> updateList) {
         //and call notifyDataSetChanged
-        rowItems = updateList;
+        productModels = updateList;
         notifyDataSetChanged();
     }
 }

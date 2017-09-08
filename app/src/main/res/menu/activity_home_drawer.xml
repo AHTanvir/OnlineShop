@@ -2,37 +2,35 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/nav_share"
+        android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_black"
         android:title="Home" />
     <item
-        android:id="@+id/mycart"
+        android:id="@+id/nav_mycart"
         android:icon="@drawable/ic_shopping_cart"
         android:title="My Cart" />
     <item android:title="Categories">
         <menu>
             <item
-                android:id="@+id/nav_man"
-                android:title="Man"/>
+                android:id="@+id/nav_men"
+                android:title="Men"
+                android:icon="@drawable/ic_shop_black_24dp"/>
             <item
                 android:id="@+id/nav_women"
-                android:title="Women"/>
+                android:title="Women"
+                android:icon="@drawable/ic_shop_black_24dp"/>
             </menu>
     </item>
     <item
-        android:id="@+id/Address"
-        android:icon="@drawable/ic_menu_share"
-        android:title="Adress" />
+        android:id="@+id/nav_address"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="Setting"/>
     <item
-            android:id="@+id/nav_send"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Send" />
-    <item
-        android:id="@+id/About"
+        android:id="@+id/nav_about"
         android:icon="@drawable/ic_description"
         android:title="About" />
     <item
-        android:id="@+id/Exit"
+        android:id="@+id/nav_exit"
         android:icon="@drawable/ic_exit"
         android:title="Exit" />
 

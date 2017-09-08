@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import anwar.onlineshop.Interface.OnItemClickListeners;
 import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.R;
 
@@ -20,8 +21,10 @@ import anwar.onlineshop.R;
 public class categoryRecyclerAdapter extends RecyclerView.Adapter<categoryRecyclerAdapter.MyViewHolder> {
     private List<RowItem> rowItems =new ArrayList<>();
     private Context context;
-    public categoryRecyclerAdapter(List<RowItem> rowItems) {
+    private OnItemClickListeners listeners;
+    public categoryRecyclerAdapter(List<RowItem> rowItems,OnItemClickListeners listeners) {
         this.rowItems = rowItems;
+        this.listeners=listeners;
     }
 
     @Override
@@ -33,10 +36,23 @@ public class categoryRecyclerAdapter extends RecyclerView.Adapter<categoryRecycl
     }
 
     @Override
-    public void onBindViewHolder(categoryRecyclerAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(categoryRecyclerAdapter.MyViewHolder holder, final int position) {
         RowItem pos= rowItems.get(position);
         holder.name.setText(pos.getCatagory());
         holder.total.setText(pos.getTotal());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listeners.onClick(v.getRootView().findViewById(R.id.category_list),position);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listeners.onLongClick(v.getRootView().findViewById(R.id.category_list),position);
+                return false;
+            }
+        });
 
     }
     @Override

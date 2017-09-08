@@ -7,4 +7,6 @@
     <color name="grey">#808080</color>
     <color name="lightgrey">#D3D3D3</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="holoLight">#8894dd</color>
+    <color name="holoDark">#8894ac</color>
 </resources>

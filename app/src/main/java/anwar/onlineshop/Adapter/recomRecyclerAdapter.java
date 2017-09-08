@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import anwar.onlineshop.Model.RowItem;
+import anwar.onlineshop.Interface.OnItemClickListeners;
+import anwar.onlineshop.Model.ProductModel;
 import anwar.onlineshop.R;
 
 /**
@@ -19,10 +22,12 @@ import anwar.onlineshop.R;
  */
 
 public class recomRecyclerAdapter extends RecyclerView.Adapter<recomRecyclerAdapter.MyViewHolder> {
-    private List<RowItem> rowItems =new ArrayList<>();
+    private List<ProductModel> productModels =new ArrayList<>();
     private Context context;
-    public recomRecyclerAdapter(List<RowItem> rowItems) {
-        this.rowItems = rowItems;
+    private OnItemClickListeners listeners;
+    public recomRecyclerAdapter(List<ProductModel> productModels,OnItemClickListeners listeners) {
+        this.productModels = productModels;
+        this.listeners=listeners;
     }
 
     @Override
@@ -34,17 +39,31 @@ public class recomRecyclerAdapter extends RecyclerView.Adapter<recomRecyclerAdap
     }
 
     @Override
-    public void onBindViewHolder(recomRecyclerAdapter.MyViewHolder holder, int position) {
-        RowItem row_pos = rowItems.get(position);
-        holder.imageView.setImageResource(row_pos.getDrawable());
+    public void onBindViewHolder(recomRecyclerAdapter.MyViewHolder holder,final int position) {
+        ProductModel row_pos = productModels.get(position);
+        Picasso.with(context).load(Integer.parseInt(row_pos.getUrl())).into(holder.imageView);
+        //holder.imageView.setImageResource(row_pos.getDrawable());
         holder.name.setText(row_pos.getName());
         holder.details.setText(row_pos.getDetails());
-        holder.price.setText(row_pos.getPrice());
+        holder.price.setText("Tk "+row_pos.getPrice());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listeners.onClick(v.getRootView().findViewById(R.id.category_recomList),position);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listeners.onLongClick(v.getRootView().findViewById(R.id.category_recomList),position);
+                return false;
+            }
+        });
 
     }
     @Override
     public int getItemCount() {
-        return rowItems.size();
+        return productModels.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
