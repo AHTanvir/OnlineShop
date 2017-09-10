@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,13 +18,10 @@ import android.widget.Toast;
 import com.xgc1986.ripplebutton.widget.RippleButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import anwar.onlineshop.Adapter.RecyclerItemClickListener;
 import anwar.onlineshop.Adapter.cartRecyclerAdapter;
 import anwar.onlineshop.HomeActivity;
 import anwar.onlineshop.Model.CartModel;
-import anwar.onlineshop.Model.TModel;
 import anwar.onlineshop.R;
 import anwar.onlineshop.storage.SharedPref;
 import anwar.onlineshop.Interface.OnItemClickListeners;

@@ -8,21 +8,17 @@
     android:orientation="vertical"
     tools:context="anwar.onlineshop.Fragment.ProductFragment">
     <include layout="@layout/toolbar"/>
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/product_recycler_view"
-            card_view:cardUseCompatPadding="true"
-            card_view:cardCornerRadius="5dp"
-            card_view:cardElevation="5dp"
-            android:scrollbars="vertical"
-            android:layout_marginTop="6dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginLeft="3dp">
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.NestedScrollView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/product_recycler_view"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardElevation="5dp"
+        android:scrollbars="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp">
+    </android.support.v7.widget.RecyclerView>
 </android.support.design.widget.CoordinatorLayout>

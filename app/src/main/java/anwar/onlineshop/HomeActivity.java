@@ -55,7 +55,6 @@ public class HomeActivity extends AppCompatActivity
     private RelativeLayout cart_relativeLayout;
     private ImageButton btn_open_cart;
     private TextView item_quantity;
-    private RequestQueue queue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,80 +73,7 @@ public class HomeActivity extends AppCompatActivity
             ShowAndHide(i);
         btn_open_cart.setOnClickListener(this);
     }
-    public  void test(){
-        JSONArray array = new JSONArray();
-        try {
-            JSONObject obj1 = new JSONObject();
-            obj1.put("id", "01");
-            obj1.put("name", "John");
-            obj1.put("number", "010");
 
-            JSONObject obj2 = new JSONObject();
-            obj2.put("id", "02");
-            obj2.put("name", "Mike");
-            obj2.put("number", "020");
-            array.put(obj1);
-
-            array.put(obj2);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            JSONArray array2 = new JSONArray(array.toString());
-            JSONObject obj = new JSONObject();
-            obj.put("id","namw");
-            obj.put("name","namw");
-            obj.put("number","namw");
-            array2.put(obj);
-            JSONArray ar = new JSONArray(array2.toString());
-            for (int i = 0; i <ar.length() ; i++) {
-                JSONObject job=ar.getJSONObject(i);
-                System.out.println(job.getString("id"));
-                System.out.println(job.getString("name"));
-                System.out.println(job.getString("number"));
-
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-   /*     JSONObject ob=new JSONObject();
-        try {
-            ob.put("name","Tanvir");
-            JSONArray js=new JSONArray(ob.toString());
-            JSONObject obj2 = new JSONObject();
-            obj2.put("student", js.toString());
-            System.out.println("json obj1 "+obj2);
-            //JSONObject ob1=new JSONObject(obj2.toString());
-           // ob1.put("name","husen");
-           // System.out.println("json obj1 "+ob1);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-    }
-    public void init(){
-        queue = Volley.newRequestQueue(this);
-        String url =EndPoints.PRODUCTS;
-        String u=" https://api.androidhive.info/contacts/";
-        JsonRequest req = new JsonRequest(Request.Method.GET, u, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    System.out.println("Respons = "+response);
-                } catch (Exception e) {
-                    System.out.println("Respons exception = "+response);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("volleyError = "+error);
-
-            }
-        });
-        req.setShouldCache(false);
-        queue.add(req);
-    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

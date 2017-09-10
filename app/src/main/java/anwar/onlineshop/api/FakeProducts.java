@@ -116,6 +116,18 @@ public class FakeProducts {
                 productList.add(ro111);
                 ProductModel ro22 =new ProductModel("006","T-SHART","descriptio","large,medium,small","Black,Red,White","100",String.valueOf(R.drawable.mp9));
                 productList.add(ro22);
+/*                ProductModel ro0 = new ProductModel("001","PANT","descriptio","large,medium,small","Black,Red,White","100","https://imgur.com/uwYn8G9.png");
+                productList.add(ro0);
+                ProductModel ro11 = new ProductModel("002","PANT","descriptio","large,medium,small","Black,Red,White","100","https://imgur.com/xfZZani.png");
+                productList.add(ro11);
+                ProductModel ro2 = new ProductModel("003","T-SHART","descriptio","large,medium,small","Black,Red,White","100","https://imgur.com/XjKaS9V.png");
+                productList.add(ro2);
+                ProductModel ro00 = new ProductModel("004","T-SHART","descriptio","large,medium,small","Black,Red,White","100","https://imgur.com/G4kFNjL.png");
+                productList.add(ro00);
+                ProductModel ro111 = new ProductModel("005","T-SHART","descriptio","large,medium,small","Black,Red,White","100","https://imgur.com/sntuRGw.png");
+                productList.add(ro111);
+                ProductModel ro22 =new ProductModel("006","T-SHART","descriptio","large,medium,small","Black,Red,White","100","https://imgur.com/3uKhTzT.png");
+                productList.add(ro22);*/
             }
             else if (name.equals("T-SHART")){
                 ProductModel ro0 = new ProductModel("001","T-SHART","descriptio","large,medium,small","Black,Red,White","100",String.valueOf(R.drawable.mt3));

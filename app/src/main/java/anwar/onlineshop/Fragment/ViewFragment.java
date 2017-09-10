@@ -171,12 +171,10 @@ public class ViewFragment extends Fragment implements View.OnClickListener {
                     CartModel cartmodel=new CartModel(productModel.getProduct_id(),productModel.getName(), spSize.getSelectedItem().toString(),
                             spColor.getSelectedItem().toString(),productModel.getPrice(),"1",productModel.getUrl());
                     if(clickfor.equals(addToCart.getText().toString())){
-                        System.out.println("CLICK "+clickfor);
                         int itm=sharedPref.putCartItem(cartmodel);
                         ((HomeActivity)getActivity()).ShowAndHide(itm);
                         //((HomeActivity)getActivity()).onBackPressed();
                     }else if(clickfor.equals(orderBtn.getText().toString())) {
-                        System.out.println("CLICK2 "+clickfor);
                         Intent intent=getActivity().getIntent();
                         intent.putExtra(NAME,"ViewFragment");
                         intent.putExtra(SELECTED_PRODUCT,cartmodel);

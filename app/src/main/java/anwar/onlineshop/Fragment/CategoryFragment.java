@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import anwar.onlineshop.Adapter.RecyclerItemClickListener;
 import anwar.onlineshop.Interface.OnItemClickListeners;
 import anwar.onlineshop.Model.ProductModel;
 import anwar.onlineshop.Model.RowItem;
@@ -107,35 +106,6 @@ public class CategoryFragment extends Fragment implements OnItemClickListeners {
         layoutManager1 = new LinearLayoutManager(getActivity());
         categoryRecom.setLayoutManager(layoutManager1);
         categoryRecom.setAdapter(recomAdapter);
-/*        categoryRecom.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),categoryRecom, new RecyclerItemClickListener
-                .OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                getActivity().getIntent().putExtra(SELECTED_PRODUCT,productModels.get(position));
-                ViewFragment vf=new ViewFragment();
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
-                        vf, vf.getTag()).addToBackStack(null).commit();
-            }
-            @Override
-            public void onItemLongClick(View v, int position) {
-            }
-        }));*/
-/*        categoryList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),categoryList, new RecyclerItemClickListener
-                .OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if(cgList.get(position).getTotal() !="0"){
-                    vf=new ProductFragment().newInstance(mParam1,cgList.get(position).getCatagory());
-                    FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
-                            vf, vf.getTag()).addToBackStack(null).commit();
-                }
-            }
-            @Override
-            public void onItemLongClick(View v, int position) {
-            }
-        }));*/
         return view;
     }
 

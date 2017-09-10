@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import anwar.onlineshop.Adapter.RecyclerItemClickListener;
 import anwar.onlineshop.Adapter.homeRecyclerAdapter;
 import anwar.onlineshop.Interface.OnItemClickListeners;
 import anwar.onlineshop.Model.ProductModel;
@@ -102,46 +101,16 @@ public class HomeFragment extends Fragment implements OnItemClickListeners {
         recyclerView=(RecyclerView)view.findViewById(R.id.home_recyclerView);
         bestSellerRecyclerView=(RecyclerView)view.findViewById(R.id.home_bestseller_list);
         rowitem=fakeProducts.getHomeCategories();
-        recycleradapter = new homeRecyclerAdapter(rowitem,listeners);
+        recycleradapter = new homeRecyclerAdapter(rowitem,this);
         layoutManager = new GridLayoutManager(getActivity(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recycleradapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), recyclerView, new RecyclerItemClickListener
-                .OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-                CategoryFragment categoryFragment=new CategoryFragment().newInstance(rowitem.get(position).getCatagory()," ");
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
-                        categoryFragment, categoryFragment.getTag()).addToBackStack(null).commit();
-            }
-
-            @Override
-            public void onItemLongClick(View v, int position) {
-            }
-        }));
         //////////////////////////////
         productModels=fakeProducts.getBestSellerProducts();
-        sellerAdapter = new sellerRecyclerAdapter(productModels,listeners);
+        sellerAdapter = new sellerRecyclerAdapter(productModels,this);
         layoutManager1 = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         bestSellerRecyclerView.setLayoutManager(layoutManager1);
         bestSellerRecyclerView.setAdapter(sellerAdapter);
-        bestSellerRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), bestSellerRecyclerView, new RecyclerItemClickListener
-                .OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                getActivity().getIntent().putExtra(SELECTED_PRODUCT,productModels.get(position));
-                ViewFragment viewFragment=new ViewFragment();
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
-                        viewFragment, viewFragment.getTag()).addToBackStack(null).commit();
-            }
-
-            @Override
-            public void onItemLongClick(View v, int position) {
-            }
-        }));
         return view;
     }
 
@@ -180,8 +149,12 @@ public class HomeFragment extends Fragment implements OnItemClickListeners {
                         categoryFragment, categoryFragment.getTag()).addToBackStack(null).commit();
                 break;
             case R.id.home_bestseller_list:
+                ProductModel productmodel=productModels.get(position);
+                getActivity().getIntent().putExtra(SELECTED_PRODUCT,productmodel);
+                ViewFragment viewFragment=new ViewFragment();
+                fragmentManager =getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(Relative_layoutfor_fragments,
-                        categoryFragment, categoryFragment.getTag()).addToBackStack(null).commit();
+                        viewFragment, viewFragment.getTag()).addToBackStack(null).commit();
                 break;
         }
     }
