@@ -9,6 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -19,7 +22,7 @@ import com.xgc1986.ripplebutton.widget.RippleButton;
 
 import java.util.ArrayList;
 
-import anwar.onlineshop.Adapter.cartRecyclerAdapter;
+import anwar.onlineshop.Adapter.CartRecyclerAdapter;
 import anwar.onlineshop.HomeActivity;
 import anwar.onlineshop.Model.CartModel;
 import anwar.onlineshop.R;
@@ -82,6 +85,7 @@ public class CartFragment extends Fragment implements View.OnClickListener ,OnIt
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -110,7 +114,7 @@ public class CartFragment extends Fragment implements View.OnClickListener ,OnIt
         }
         listeners=(OnItemClickListeners)this;
         Totalcost=String.valueOf(sharedPref.getTotalcost());
-        adapter=new cartRecyclerAdapter(cartModels,listeners);
+        adapter=new CartRecyclerAdapter(cartModels,listeners);
         layoutManager= new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -149,7 +153,14 @@ public class CartFragment extends Fragment implements View.OnClickListener ,OnIt
         super.onDetach();
         mListener = null;
     }
-
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        // TODO Add your menu entries here
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.home, menu);
+        MenuItem searchView = menu.findItem(R.id.action_search);
+        searchView.setVisible(false);
+    }
     @Override
     public void onClick(View v) {
         FragmentManager fragmentManager=getActivity().getSupportFragmentManager();

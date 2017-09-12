@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import anwar.onlineshop.Interface.OnItemClickListeners;
+import anwar.onlineshop.Model.CategoryModel;
+import anwar.onlineshop.Model.ProductModel;
 import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.R;
 
@@ -25,13 +27,17 @@ import anwar.onlineshop.R;
  * Created by anwar on 3/4/2017.
  */
 
-public class homeRecyclerAdapter extends RecyclerView.Adapter<homeRecyclerAdapter.MyViewHolder> implements View.OnClickListener{
-    private List<RowItem> rowItems =new ArrayList<>();
+public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.MyViewHolder> implements View.OnClickListener{
+    private List<CategoryModel> categoryList =new ArrayList<>();
     private Context context;
     private OnItemClickListeners listeners;
 
-    public homeRecyclerAdapter(List<RowItem> rowItems, OnItemClickListeners listeners) {
-        this.rowItems = rowItems;
+    public HomeRecyclerAdapter(List<CategoryModel> rowItems, OnItemClickListeners listeners) {
+        this.categoryList = rowItems;
+        this.listeners = listeners;
+    }
+
+    public HomeRecyclerAdapter(OnItemClickListeners listeners) {
         this.listeners = listeners;
     }
 
@@ -46,10 +52,10 @@ public class homeRecyclerAdapter extends RecyclerView.Adapter<homeRecyclerAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         YoYo.with(Techniques.FadeIn).playOn(holder.cardView);
-        RowItem pos= rowItems.get(position);
-        holder.image.setImageResource(pos.getDrawable());
-        //Picasso.with(context).load(Integer.parseInt(pos.getUrl())).into(holder.image);
-        holder.text.setText(pos.getCatagory());
+        CategoryModel pos= categoryList.get(position);
+        holder.image.setImageResource(Integer.parseInt(pos.getImageUrl()));
+        //Picasso.with(context).load(pos.getImageUrl()).into(holder.image);
+        holder.text.setText(pos.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,14 +80,13 @@ public class homeRecyclerAdapter extends RecyclerView.Adapter<homeRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return rowItems.size();
+        return categoryList.size();
     }
 
     @Override
     public void onClick(View v) {
 
     }
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView text;
@@ -92,6 +97,10 @@ public class homeRecyclerAdapter extends RecyclerView.Adapter<homeRecyclerAdapte
             text=(TextView)itemView.findViewById(R.id.catagory_name);
             cardView= (CardView) itemView.findViewById(R.id.cardview);
         }
+    }
+    public void addProducts(List<CategoryModel> categoryList){
+        this.categoryList=categoryList;
+        notifyDataSetChanged();
     }
 }
 /*

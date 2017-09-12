@@ -16,32 +16,35 @@ import java.util.List;
 
 import anwar.onlineshop.Interface.OnItemClickListeners;
 import anwar.onlineshop.Model.ProductModel;
-import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.R;
 
 /**
  * Created by anwar on 8/15/2017.
  */
 
-public class sellerRecyclerAdapter extends RecyclerView.Adapter<sellerRecyclerAdapter.MyViewHolder>{
+public class SellerRecyclerAdapter extends RecyclerView.Adapter<SellerRecyclerAdapter.MyViewHolder>{
     private List<ProductModel> productModel =new ArrayList<>();
     private Context context;
     private OnItemClickListeners listeners;
-    public sellerRecyclerAdapter(List<ProductModel> productModel, OnItemClickListeners listeners) {
+    public SellerRecyclerAdapter(List<ProductModel> productModel, OnItemClickListeners listeners) {
         this.productModel = productModel;
         this.listeners = listeners;
     }
 
+    public SellerRecyclerAdapter(OnItemClickListeners listeners) {
+        this.listeners = listeners;
+    }
+
     @Override
-    public sellerRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SellerRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context=parent.getContext();
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.best_sellers_item,parent,false);
-        sellerRecyclerAdapter.MyViewHolder holder=new sellerRecyclerAdapter.MyViewHolder(view);
+        SellerRecyclerAdapter.MyViewHolder holder=new SellerRecyclerAdapter.MyViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(sellerRecyclerAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(SellerRecyclerAdapter.MyViewHolder holder, final int position) {
         ProductModel pos= productModel.get(position);
         Picasso.with(context).load(Integer.parseInt(pos.getUrl())).into(holder.image);
         //Picasso.with(context).load(pos.getUrl()).into(holder.image);
@@ -84,5 +87,9 @@ public class sellerRecyclerAdapter extends RecyclerView.Adapter<sellerRecyclerAd
             name=(TextView)itemView.findViewById(R.id.Product_name);
             price=(TextView)itemView.findViewById(R.id.Product_price);
         }
+    }
+    public void addProducts(List<ProductModel> productModel){
+        this.productModel.addAll(productModel);
+        notifyDataSetChanged();
     }
 }

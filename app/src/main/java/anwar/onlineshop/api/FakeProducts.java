@@ -10,8 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import anwar.onlineshop.Fragment.CyclicTransitionDrawable;
+import anwar.onlineshop.Model.CategoryModel;
+import anwar.onlineshop.Model.CategoryModel;
+import anwar.onlineshop.Model.CategoryModel;
+import anwar.onlineshop.Model.CategoryModel;
+import anwar.onlineshop.Model.CategoryModel;
+import anwar.onlineshop.Model.ProductCategoryModel;
 import anwar.onlineshop.Model.ProductModel;
-import anwar.onlineshop.Model.RowItem;
+import anwar.onlineshop.Model.CategoryModel;
 import anwar.onlineshop.R;
 
 /**
@@ -26,16 +32,15 @@ public class FakeProducts {
     }*/
 
     public List getHomeCategories(){
-        List<RowItem> rowItems=new ArrayList<>();
-        RowItem row=new RowItem(R.drawable.men_shop,"MEN");
+        List<CategoryModel> rowItems=new ArrayList<>();
+        CategoryModel row=new CategoryModel(String.valueOf(R.drawable.men_shop),"MEN");
         rowItems.add(row);
-        RowItem rowItem=new RowItem(R.drawable.h5,"WOMEN");
+        CategoryModel rowItem=new CategoryModel(String.valueOf(R.drawable.h5),"WOMEN");
         rowItems.add(rowItem);
-        RowItem row2=new RowItem(R.drawable.home_category,"KID");
+        CategoryModel row2=new CategoryModel(String.valueOf(R.drawable.home_category),"KID");
         rowItems.add(row2);
-        RowItem rowIte=new RowItem(R.drawable.home_category,"OTHER");
+        CategoryModel rowIte=new CategoryModel(String.valueOf(R.drawable.home_category),"OTHER");
         rowItems.add(rowIte);
-
         return rowItems;
     }
     public List getBestSellerProducts(){
@@ -55,31 +60,31 @@ public class FakeProducts {
         return productList;
     }
     public List getProductType(String name){
-        List<RowItem> rowItems=new ArrayList<>();
+        List<ProductCategoryModel> rowItems=new ArrayList<>();
         if(name.equals("MEN")){
-            RowItem r=new RowItem("PANT","2");
+            ProductCategoryModel r=new ProductCategoryModel("PANT","2");
             rowItems.add(r);
-            RowItem r1=new RowItem("SHART","12");
+            ProductCategoryModel r1=new ProductCategoryModel("SHART","12");
             rowItems.add(r1);
-            RowItem r12=new RowItem("T-SHART","10");
+            ProductCategoryModel r12=new ProductCategoryModel("T-SHART","10");
             rowItems.add(r12);
         }else if (name.contains("WOMEN")){
-            RowItem r=new RowItem("WATCH","2");
+            ProductCategoryModel r=new ProductCategoryModel("WATCH","2");
             rowItems.add(r);
-            RowItem r1=new RowItem("BAG","0");
+            ProductCategoryModel r1=new ProductCategoryModel("BAG","0");
             rowItems.add(r1);
-            RowItem r12=new RowItem("T-SHART","6");
+            ProductCategoryModel r12=new ProductCategoryModel("T-SHART","6");
             rowItems.add(r12);
         }
         return rowItems;
     }
     public List getWomenProductType(){
-        List<RowItem> rowItems=new ArrayList<>();
-        RowItem r=new RowItem("WATCH","2");
+        List<CategoryModel> rowItems=new ArrayList<>();
+        CategoryModel r=new CategoryModel("WATCH","2");
         rowItems.add(r);
-        RowItem r1=new RowItem("BAG","0");
+        CategoryModel r1=new CategoryModel("BAG","0");
         rowItems.add(r1);
-        RowItem r12=new RowItem("T-SHART","6");
+        CategoryModel r12=new CategoryModel("T-SHART","6");
         rowItems.add(r12);
         return rowItems;
     }

@@ -9,9 +9,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,7 +29,7 @@ import java.util.List;
 import anwar.onlineshop.HomeActivity;
 import anwar.onlineshop.Interface.OnItemClickListeners;
 import anwar.onlineshop.Model.ProductModel;
-import anwar.onlineshop.Adapter.productRecyclerAdapter;
+import anwar.onlineshop.Adapter.ProductRecyclerAdapter;
 import anwar.onlineshop.R;
 import anwar.onlineshop.api.EndPoints;
 import anwar.onlineshop.api.FakeProducts;
@@ -51,7 +53,7 @@ public class ProductFragment extends Fragment implements OnItemClickListeners {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private RecyclerView productRecyclerView;
-    private productRecyclerAdapter listadapter;
+    private ProductRecyclerAdapter listadapter;
     private GridLayoutManager layoutManager;
     private int itemCount=0;
     private List<ProductModel> productList=new ArrayList<>();
@@ -91,6 +93,7 @@ public class ProductFragment extends Fragment implements OnItemClickListeners {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -107,7 +110,7 @@ public class ProductFragment extends Fragment implements OnItemClickListeners {
         productRecyclerView=(RecyclerView)view.findViewById(R.id.product_recycler_view);
         layoutManager=new GridLayoutManager(getActivity(),2);
         productList=fakeProducts.getProductList(mParam1,mParam2);
-        listadapter=new productRecyclerAdapter(this);
+        listadapter=new ProductRecyclerAdapter(this);
         productRecyclerView.setLayoutManager(layoutManager);
         productRecyclerView.setAdapter(listadapter);
         addProduct();
@@ -131,17 +134,6 @@ public class ProductFragment extends Fragment implements OnItemClickListeners {
         return view;
     }
 
-    private void addProduct() {
-        List<ProductModel> temp=new ArrayList<>();
-        for (int i = itemCount; i <productList.size() ; i++) {
-            temp.add(productList.get(i));
-            if(temp.size()==6){
-                itemCount=i;
-                break;
-            }
-        }
-        listadapter.addProduct(temp);
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -185,6 +177,17 @@ public class ProductFragment extends Fragment implements OnItemClickListeners {
         super.onResume();
         itemCount=0;
     }
+    private void addProduct() {
+        List<ProductModel> temp=new ArrayList<>();
+        for (int i = itemCount; i <productList.size() ; i++) {
+            temp.add(productList.get(i));
+            if(temp.size()==6){
+                itemCount=i;
+                break;
+            }
+        }
+        listadapter.addProduct(temp);
+    }
     public void init(){
         queue = Volley.newRequestQueue(getActivity());
         String url = EndPoints.PRODUCTS_LIST+mParam1+"/"+mParam2;
@@ -205,7 +208,14 @@ public class ProductFragment extends Fragment implements OnItemClickListeners {
         req.setShouldCache(false);
         queue.add(req);
     }
-
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        // TODO Add your menu entries here
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.home, menu);
+        MenuItem searchView = menu.findItem(R.id.action_search);
+        searchView.setVisible(false);
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

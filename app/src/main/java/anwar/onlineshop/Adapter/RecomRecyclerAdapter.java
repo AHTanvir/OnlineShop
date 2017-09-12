@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import anwar.onlineshop.Interface.OnItemClickListeners;
+import anwar.onlineshop.Model.CategoryModel;
 import anwar.onlineshop.Model.ProductModel;
 import anwar.onlineshop.R;
 
@@ -21,25 +22,29 @@ import anwar.onlineshop.R;
  * Created by anwar on 8/16/2017.
  */
 
-public class recomRecyclerAdapter extends RecyclerView.Adapter<recomRecyclerAdapter.MyViewHolder> {
+public class RecomRecyclerAdapter extends RecyclerView.Adapter<RecomRecyclerAdapter.MyViewHolder> {
     private List<ProductModel> productModels =new ArrayList<>();
     private Context context;
     private OnItemClickListeners listeners;
-    public recomRecyclerAdapter(List<ProductModel> productModels,OnItemClickListeners listeners) {
+    public RecomRecyclerAdapter(List<ProductModel> productModels, OnItemClickListeners listeners) {
         this.productModels = productModels;
         this.listeners=listeners;
     }
 
+    public RecomRecyclerAdapter(OnItemClickListeners listeners) {
+        this.listeners = listeners;
+    }
+
     @Override
-    public recomRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecomRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context=parent.getContext();
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recom_list_item,parent,false);
-        recomRecyclerAdapter.MyViewHolder holder=new recomRecyclerAdapter.MyViewHolder(view);
+        RecomRecyclerAdapter.MyViewHolder holder=new RecomRecyclerAdapter.MyViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(recomRecyclerAdapter.MyViewHolder holder,final int position) {
+    public void onBindViewHolder(RecomRecyclerAdapter.MyViewHolder holder, final int position) {
         ProductModel row_pos = productModels.get(position);
         Picasso.with(context).load(Integer.parseInt(row_pos.getUrl())).into(holder.imageView);
         //holder.imageView.setImageResource(row_pos.getDrawable());
@@ -78,5 +83,9 @@ public class recomRecyclerAdapter extends RecyclerView.Adapter<recomRecyclerAdap
             details = (TextView) itemView.findViewById(R.id.product_details);
             price = (TextView) itemView.findViewById(R.id.product_price);
         }
+    }
+    public void addProducts(List<ProductModel> productModels){
+        this.productModels.addAll(productModels);
+        notifyDataSetChanged();
     }
 }

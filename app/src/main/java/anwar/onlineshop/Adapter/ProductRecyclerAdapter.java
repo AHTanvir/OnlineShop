@@ -1,7 +1,6 @@
 package anwar.onlineshop.Adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,37 +16,36 @@ import java.util.List;
 
 import anwar.onlineshop.Interface.OnItemClickListeners;
 import anwar.onlineshop.Model.ProductModel;
-import anwar.onlineshop.Model.RowItem;
 import anwar.onlineshop.R;
 
 /**
  * Created by anwar on 8/20/2017.
  */
 
-public class productRecyclerAdapter  extends RecyclerView.Adapter<productRecyclerAdapter.MyViewHolder> {
+public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecyclerAdapter.MyViewHolder> {
     private List<ProductModel> rowItems =new ArrayList<>();
     private Context context;
     private OnItemClickListeners listeners;
 
-    public productRecyclerAdapter( OnItemClickListeners listeners) {
+    public ProductRecyclerAdapter(OnItemClickListeners listeners) {
         this.listeners = listeners;
     }
 
-    public productRecyclerAdapter(List<ProductModel> rowItems, OnItemClickListeners listeners) {
+    public ProductRecyclerAdapter(List<ProductModel> rowItems, OnItemClickListeners listeners) {
         this.rowItems = rowItems;
         this.listeners = listeners;
     }
 
     @Override
-    public productRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProductRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context=parent.getContext();
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.product_list_item,parent,false);
-        productRecyclerAdapter.MyViewHolder holder=new productRecyclerAdapter.MyViewHolder(view);
+        ProductRecyclerAdapter.MyViewHolder holder=new ProductRecyclerAdapter.MyViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final productRecyclerAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final ProductRecyclerAdapter.MyViewHolder holder, final int position) {
         ProductModel row_pos = rowItems.get(position);
 /*        holder.progressBar.setVisibility(View.VISIBLE);
         Picasso.with(context).load(row_pos.getUrl()).into(holder.imageView,new com.squareup.picasso.Callback(){

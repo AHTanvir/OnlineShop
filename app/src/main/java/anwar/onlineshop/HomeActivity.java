@@ -7,6 +7,8 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,8 +18,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListPopupWindow;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -54,6 +59,7 @@ public class HomeActivity extends AppCompatActivity
     private Toolbar toolbar;
     private RelativeLayout cart_relativeLayout;
     private ImageButton btn_open_cart;
+    private PopupWindow popupWindow;
     private TextView item_quantity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,5 +223,16 @@ public class HomeActivity extends AppCompatActivity
                         c, c.getTag()).addToBackStack(null).commit();
                 break;
         }
+    }
+    public void progressDialog(View view,int x,int y){
+        popupWindow = new PopupWindow(this);
+        LayoutInflater inflater=getLayoutInflater();
+        View v=inflater.inflate(R.layout.dot_progressbar, null);
+        popupWindow.setFocusable(false);
+        popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindow.setContentView(v);
+        popupWindow.setOutsideTouchable(false);
+        popupWindow.showAtLocation(view, Gravity.CENTER,x,y);
     }
 }

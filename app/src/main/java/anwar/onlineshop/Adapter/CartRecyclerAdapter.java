@@ -21,26 +21,26 @@ import anwar.onlineshop.R;
  * Created by anwar on 9/2/2017.
  */
 
-public class cartRecyclerAdapter extends RecyclerView.Adapter<cartRecyclerAdapter.MyViewHolder>{
+public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapter.MyViewHolder>{
     private List<CartModel> rowItems =new ArrayList<>();
     private Context context;
     private OnItemClickListeners listeners;
-    public cartRecyclerAdapter(List<CartModel> rowItems,OnItemClickListeners listeners) {
+    public CartRecyclerAdapter(List<CartModel> rowItems, OnItemClickListeners listeners) {
         this.rowItems = rowItems;
         this.listeners=listeners;
     }
 
 
     @Override
-    public cartRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CartRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context=parent.getContext();
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_list_item,parent,false);
-        cartRecyclerAdapter.MyViewHolder holder=new cartRecyclerAdapter.MyViewHolder(view);
+        CartRecyclerAdapter.MyViewHolder holder=new CartRecyclerAdapter.MyViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(cartRecyclerAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(CartRecyclerAdapter.MyViewHolder holder, final int position) {
         CartModel row_pos = rowItems.get(position);
         Picasso.with(context).load(Integer.parseInt(row_pos.getImageurl())).into(holder.imageView);
       // holder.imageView.setImageResource(Integer.parseInt(row_pos.getImageurl()));
