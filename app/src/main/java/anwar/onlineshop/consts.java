@@ -13,7 +13,6 @@ public class consts {
      * Volley request unknown status code
      */
     public static final int MissingStatusCode = 9999;
-
     public enum VISIBLE {
         EMPTY, CONTENT, PROGRESS
     }

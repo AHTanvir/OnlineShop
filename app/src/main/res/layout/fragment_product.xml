@@ -4,8 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D9E6FD"
-    android:orientation="vertical"
+    android:background="@color/cardview_light_background"
     tools:context="anwar.onlineshop.Fragment.ProductFragment">
     <include layout="@layout/toolbar"/>
     <android.support.v7.widget.RecyclerView
@@ -13,12 +12,6 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/product_recycler_view"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="5dp"
-        android:scrollbars="vertical"
-        android:layout_marginTop="3dp"
-        android:layout_marginRight="3dp"
-        android:layout_marginLeft="3dp">
+        android:layout_margin="3dp">
     </android.support.v7.widget.RecyclerView>
 </android.support.design.widget.CoordinatorLayout>

@@ -2,18 +2,21 @@ package anwar.onlineshop.Fragment;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -108,9 +111,12 @@ public class ProductFragment extends Fragment implements OnItemClickListeners {
         View view=inflater.inflate(R.layout.fragment_product, container, false);
         ((HomeActivity)getActivity()).settingUpActionBar(view,mParam2);
         productRecyclerView=(RecyclerView)view.findViewById(R.id.product_recycler_view);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            productRecyclerView.getLayoutParams().height=getHeight();
+        }
         layoutManager=new GridLayoutManager(getActivity(),2);
         productList=fakeProducts.getProductList(mParam1,mParam2);
-        listadapter=new ProductRecyclerAdapter(this);
+        listadapter=new ProductRecyclerAdapter(productList,this);
         productRecyclerView.setLayoutManager(layoutManager);
         productRecyclerView.setAdapter(listadapter);
         addProduct();
@@ -186,7 +192,7 @@ public class ProductFragment extends Fragment implements OnItemClickListeners {
                 break;
             }
         }
-        listadapter.addProduct(temp);
+       // listadapter.addProduct(temp);
     }
     public void init(){
         queue = Volley.newRequestQueue(getActivity());
@@ -229,5 +235,11 @@ public class ProductFragment extends Fragment implements OnItemClickListeners {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public int getHeight(){
+        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int mWidthScreen = display.getWidth();
+        int mHeightScreen = display.getHeight();
+        return mHeightScreen;
     }
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -51,7 +52,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        YoYo.with(Techniques.FadeIn).playOn(holder.cardView);
+        YoYo.with(Techniques.BounceIn).playOn(holder.cardView);
         CategoryModel pos= categoryList.get(position);
         holder.image.setImageResource(Integer.parseInt(pos.getImageUrl()));
         //Picasso.with(context).load(pos.getImageUrl()).into(holder.image);
@@ -90,12 +91,12 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView text;
-        CardView cardView;
+        LinearLayout cardView ;
         public MyViewHolder(View itemView) {
             super(itemView);
             image=(ImageView)itemView.findViewById(R.id.thumb_img);
             text=(TextView)itemView.findViewById(R.id.catagory_name);
-            cardView= (CardView) itemView.findViewById(R.id.cardview);
+            cardView= (LinearLayout) itemView.findViewById(R.id.cardview);
         }
     }
     public void addProducts(List<CategoryModel> categoryList){

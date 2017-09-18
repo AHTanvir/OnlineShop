@@ -1,14 +1,19 @@
 package anwar.onlineshop.Adapter;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -47,6 +52,12 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     @Override
     public void onBindViewHolder(final ProductRecyclerAdapter.MyViewHolder holder, final int position) {
         ProductModel row_pos = rowItems.get(position);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.cardView.getLayoutParams();
+            layoutParams.setMargins(10, 10, 10, 10);
+            holder.cardView.requestLayout();
+        }
+        YoYo.with(Techniques.DropOut).playOn(holder.cardView);
 /*        holder.progressBar.setVisibility(View.VISIBLE);
         Picasso.with(context).load(row_pos.getUrl()).into(holder.imageView,new com.squareup.picasso.Callback(){
             @Override
@@ -80,6 +91,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         });
 
     }
+
     public void addProduct(List<ProductModel> rowItems){
         this.rowItems.addAll(rowItems);
         notifyDataSetChanged();
@@ -94,14 +106,16 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         TextView name;
         TextView details;
         TextView price;
+        CardView cardView;
         ProgressBar progressBar;
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView=(ImageView)itemView.findViewById(R.id.product_img);
-            progressBar=(ProgressBar)itemView.findViewById(R.id.product_progressbar);
+           // progressBar=(ProgressBar)itemView.findViewById(R.id.product_progressbar);
             name = (TextView) itemView.findViewById(R.id.product_name);
             details = (TextView) itemView.findViewById(R.id.product_details);
             price = (TextView) itemView.findViewById(R.id.product_price);
+            cardView=(CardView)itemView.findViewById(R.id.product_card_view);
         }
     }
 
